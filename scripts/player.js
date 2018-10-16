@@ -3,7 +3,7 @@ function createPlayer() {
     const player = {
         x: 100,
         y: 450,
-        speed: 3,
+        speed: 7,
         lives: 3,
         sprite: {
             img: spritesheet,
@@ -44,7 +44,7 @@ function animatePlayer() {
                 y: player.y,
                 width: 4,
                 height: 15,
-                color: '#0F0',
+                color: '#F047E7',
                 speed: 9
             }
         }
