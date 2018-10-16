@@ -19,7 +19,7 @@ const aliensSprites = {
     ],
     20: [
         { x: 32, y: 3, width: 22, height: 16 },
-        { x: 32, y: 25, width: 16, height: 16 }
+        { x: 32, y: 25, width: 22, height: 16 }
     ],
     10: [
         { x: 60, y: 25, width: 24, height: 16 },
@@ -44,13 +44,13 @@ function createAliens() {
         let alienHeight = aliensSprites[aliensMap[i]][0].height
 
         aliens.push({
-            x: 12 + i % NB_ALIENS_PER_LINE * ALIEN_SPACE_X,
+            x: 12 + i % NB_ALIENS_PER_LINE * ALIEN_SPACE_X + (24 - alienWidth) / 2 | 0,
             y: 100 + line * ALIEN_SPACE_Y,
             width: alienWidth,
             height: alienHeight,
             points: aliensMap[i],
             direction: 1,
-            spriteIndex: 0
+            spriteIndex: 1
         });
     }
     return aliens;
@@ -76,6 +76,14 @@ function animateAliens() {
             else {
                 aliens[i].x += 12 * aliens[i].direction;
             }
+
+            aliens[i].spriteIndex = (aliens[i].spriteIndex === 0) ? 1 : 0;
+
+            /* if (aliens[i].spriteIndex === 0) {
+                aliens[i].spriteIndex = 1
+            } else {
+                aliens[i].spriteIndex = 0;
+            } */
         }
     } // Fin du mouvement des aliens
 
