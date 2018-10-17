@@ -47,7 +47,9 @@ function animatePlayer() {
                 height: 15,
                 color: '#F047E7',
                 speed: 9
-            }
+            };
+            // Son
+            sounds['shoot'].play();
         }
     }
 
