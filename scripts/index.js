@@ -29,6 +29,7 @@ function render() {
 
     renderPlayer(); // Fonction qui gère le dessin du joueur
     renderAliens(); // Fonction qui gère le dessin des aliens
+    renderUI(); // Fonction qui gère le dessin des éléments de l'interface
 }
 
 // Fonction gérant la boucle de jeu

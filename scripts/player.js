@@ -5,6 +5,7 @@ function createPlayer() {
         y: 450,
         speed: 7,
         lives: 3,
+        score: 0,
         sprite: {
             img: spritesheet,
             offsetX: 88,
