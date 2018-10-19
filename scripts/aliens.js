@@ -77,7 +77,6 @@ function animateAliens() {
         let extremeDownAlien = Math.max(...aliens.map(a => a.y) );
         if (extremeDownAlien + 16 >= player.y) {
             player.lives = 0;
-            sounds['player_death'].play();
             game_mode = MODE_GAME_OVER;
         }
 
@@ -153,6 +152,38 @@ function animateAliens() {
         if (aliensShots[i].y > canvas.height) {
             aliensShots.splice(i, 1);
             i--;
+        }
+        else if (
+            aliensShots[i].x > player.x &&
+            aliensShots[i].x + aliensShots[i].width < player.x + player.sprite.width && 
+            aliensShots[i].y + aliensShots[i].height > player.y && 
+            aliensShots[i].y < player.y + player.sprite.height
+        ) {
+            // Moins une vie
+            player.lives--;
+
+            if (player.lives === 0) {
+                game_mode = MODE_GAME_OVER;
+                sounds['player_death'].play();
+                break;
+            }
+
+            // suppression des tirs alien en cours, et du shoot player
+            aliensShots.length = 0; // vide l'array en javascript
+            player.bullet = null;
+
+            // "Boom !"
+            sounds['player_death'].play();
+
+            // Changement du mode de jeu pour 2 secondes
+            game_mode = MODE_PLAYER_DEAD;
+            setTimeout(() => {
+                // Replacement du joueur à sa position initiale
+                player.x = 100;
+
+                game_mode = MODE_PLAYING;
+            }, 2000);
+        
         }
 
     }
