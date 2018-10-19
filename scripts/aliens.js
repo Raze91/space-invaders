@@ -34,6 +34,8 @@ let lastAlienMovement = 0; // instant 't' du dernier déplacement des aliens
 
 let alienExplosions = []; // Tableau qui servira à stocker les sprites d'explosions
 
+let aliensShots = []; // Tableau qui contiendra la liste des éventuels tirs d'aliens
+
 let alienSoundNb = 1; // Numéro de son de l'alien ( variera de 1 à 4, en boucle)
 
 function createAliens() {
@@ -85,6 +87,10 @@ function animateAliens() {
 
         // Parcours du tableau d'aliens pour mise à jour
         for (let i = 0; i < aliens.length; i++) {
+
+            if(Math.random() > 0.99) {
+                createAlienShot(aliens[i]);
+            }
 
             if (extremeRightAlien > canvas.width && aliens[i].direction === 1 ||
                  extremeLeftAlien <= 0 && aliens[i].direction === -1
@@ -139,6 +145,18 @@ function animateAliens() {
         }
     }
 
+    // Gestion des shots aliens
+    for (let i = 0; i < aliensShots.length; i++) {
+        aliensShots[i].y += aliensShots[i].speed;
+
+        // Si un tir d'alien déborde en bas du canvas
+        if (aliensShots[i].y > canvas.height) {
+            aliensShots.splice(i, 1);
+            i--;
+        }
+
+    }
+
 } // Fin animateAliens
 
 function renderAliens() {
@@ -179,6 +197,13 @@ function renderAliens() {
             alienExplosions[i].sprite.height
         );
     }
+
+
+    // Dessin des shots aliens
+    for (let i = 0; i < aliensShots.length; i++) {
+        context.fillStyle = '#fff';
+        context.fillRect(aliensShots[i].x, aliensShots[i].y, aliensShots[i].width, aliensShots[i].height);
+    }
 }
 
 function createExplosion(alien) { // Fonction qui crée un objet qui représente une explosion, à partir d'un alien
@@ -193,4 +218,18 @@ function createExplosion(alien) { // Fonction qui crée un objet qui représente
         },
         dateCreated : Date.now()
     });
+}
+
+
+function createAlienShot(alien) {
+    // son
+    sounds['shoot'].play();
+    // ajout d'un shot alien dans le tableau correspondant
+    aliensShots.push({
+        x: alien.x + alien.width/2,
+        y: alien.y + alien.height,
+        width: 4,
+        height: 10,
+        speed: 5
+    })
 }
