@@ -70,11 +70,10 @@ function gameloop() {
 function renderGameOver() {
     context.fillStyle = '#0D84FA'
     context.font = 'normal 30px "Press Start 2P", cursive';
-    context.textAlign = 'Center'
-    context.fillText('GAME OVER', canvas.width / 2 - 120, canvas.height/2);
+    context.textAlign = 'center'
+    context.fillText('GAME OVER', canvas.width / 2, canvas.height/2);
 
     context.fillStyle = '#FFFFFF'
     context.font = 'normal 15px "Press Start 2P", cursive';
-    context.textAlign = 'Center'
-    context.fillText('PRESS F5', canvas.width/2 - 50, canvas.height/2 + 50);
+    context.fillText('PRESS F5', canvas.width/2, canvas.height/2 + 50);
 }

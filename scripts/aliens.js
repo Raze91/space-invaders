@@ -70,6 +70,15 @@ function animateAliens() {
             alienSoundNb =
         } */
 
+        // Vérification si un des aliens du groupe a atteint le joueur 
+        // Pour cela, récupération des coordonnées de l'alien le plus bas dans le groupe
+        let extremeDownAlien = Math.max(...aliens.map(a => a.y) );
+        if (extremeDownAlien + 16 >= player.y) {
+            player.lives = 0;
+            sounds['player_death'].play();
+            game_mode = MODE_GAME_OVER;
+        }
+
         // Récupération du x de l'alien le plus à droite ( et à gauche)
         let extremeRightAlien = Math.max( ...aliens.map(a => a.x)) + ALIEN_SPACE_X;
         let extremeLeftAlien = Math.min( ...aliens.map(a => a.x)) - ALIEN_SPACE_X;
