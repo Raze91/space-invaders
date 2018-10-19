@@ -17,6 +17,10 @@ const sounds = {
     player_death : document.getElementById('player_death'),
 };
 
+const MODE_PLAYING = 1;
+const MODE_GAME_OVER = 2;
+let game_mode = MODE_PLAYING;
+
 // Chargement de l'image du sprite avant de démarrer le jeu
 const spritesheet = new Image();
 spritesheet.src = '../img/spritesheet.png';
@@ -28,17 +32,28 @@ spritesheet.onload = function () {// Fonction exécutée lorsque le navigateur a
 }
 
 function update() {
-    animatePlayer(); // Fonction qui gère l'animation du joueur
-    animateAliens(); // Fonction qui gère l'animation des aliens
+
+    switch(game_mode) {
+        case MODE_PLAYING:
+        animatePlayer(); // Fonction qui gère l'animation du joueur
+        animateAliens(); // Fonction qui gère l'animation des aliens
+    }    
 }
 
 function render() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
 
-    renderPlayer(); // Fonction qui gère le dessin du joueur
-    renderAliens(); // Fonction qui gère le dessin des aliens
-    renderUI(); // Fonction qui gère le dessin des éléments de l'interface
+    switch(game_mode) {
+    case MODE_PLAYING: 
+        renderPlayer(); // Fonction qui gère le dessin du joueur
+        renderAliens(); // Fonction qui gère le dessin des aliens
+        renderUI(); // Fonction qui gère le dessin des éléments de l'interface
+        break;
+    case MODE_GAME_OVER:
+        renderGameOver(); // Affichage du "game over" à l'écran
+        break;
+    }
 }
 
 // Fonction gérant la boucle de jeu
@@ -47,4 +62,19 @@ function gameloop() {
     render();
 
     timer = window.requestAnimationFrame(gameloop);
+
+
+    
+}
+
+function renderGameOver() {
+    context.fillStyle = '#0D84FA'
+    context.font = 'normal 30px "Press Start 2P", cursive';
+    context.textAlign = 'Center'
+    context.fillText('GAME OVER', canvas.width / 2 - 120, canvas.height/2);
+
+    context.fillStyle = '#FFFFFF'
+    context.font = 'normal 15px "Press Start 2P", cursive';
+    context.textAlign = 'Center'
+    context.fillText('PRESS F5', canvas.width/2 - 50, canvas.height/2 + 50);
 }
